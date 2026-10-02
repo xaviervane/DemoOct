@@ -1,0 +1,101 @@
+﻿@page "/bookings"
+@using ConferencesRF.Data
+@using ConferencesRF.Models
+@using ConferencesRF.Services
+@inject ConferencesRfdbContext db
+@using Microsoft.EntityFrameworkCore 
+@inject UserSession userSession
+
+<div class="container">
+    <h3>Бронирование</h3>
+
+    <a href="/booking/create">Формирование заявки</a>
+
+    @foreach (var booking in bookings)
+    {
+        <div>
+            <div>@booking.ConferenceName</div>
+            <div>@booking.Room.Name</div>
+            <div>@booking.Date.ToString("dd.MM.yyyy")</div>
+            <div>@booking.PaymentType.Name</div>
+            <div>@booking.BookingStatus.Name</div>
+        </div>
+
+        <div>
+            @foreach(var feedback in booking.FeedBacks)
+            {
+                <p>@feedback.Booking.User.LastName</p>
+                <p>@feedback.Text</p>
+            }
+        </div>
+
+        <button @onclick="() => ShowFeedBackForm(booking.Id)">Оставить отзыв</button>
+
+
+        @if (booking.Id == selectedBookingId)
+        {
+            <EditForm Model="@newFeedBack" OnValidSubmit="@SubmitFeedBack">
+                <DataAnnotationsValidator />
+                <div>
+                    <label>Ваш отзыв:</label>
+                    <InputTextArea @bind-Value="newFeedBack.Text" rows="4" placeholder="Поделитесь впечатлениями о мероприятии..."></InputTextArea>
+                    <ValidationMessage For="@(() => newFeedBack.Text)" />
+                </div>
+
+                <button type="submit">Отправить отзыв</button>
+            </EditForm>
+        }
+    }
+
+
+</div>
+
+
+@code {
+
+    //Список броней 
+    List<Booking> bookings = new List<Booking>();
+
+    //Отзыв
+    FeedBack newFeedBack = new FeedBack();
+
+    int? selectedBookingId = null;
+
+    //Метод будет выполнен во время загрузки страницы
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadBooking();
+    }
+
+    private async Task LoadBooking()
+    {
+        bookings = await db.Bookings
+        .Include(b => b.Room)
+        .Include(b => b.PaymentType)
+        .Include(b => b.BookingStatus)
+        .Include(b => b.FeedBacks)
+        .OrderByDescending(b => b.Date)
+        .Where(b => b.UserId == userSession.UserId).ToListAsync();
+    }
+
+    private async Task SubmitFeedBack()
+    {
+        if (selectedBookingId == null)
+        {
+            return;
+        }
+
+        newFeedBack.BookingId = selectedBookingId.Value;
+        db.FeedBacks.Add(newFeedBack);
+        await db.SaveChangesAsync();
+        selectedBookingId = null;
+        newFeedBack = new FeedBack();
+        await LoadBooking();
+    }
+
+    private void ShowFeedBackForm(int bookingId)
+    {
+        selectedBookingId = bookingId;
+        newFeedBack = new FeedBack();
+    }
+}

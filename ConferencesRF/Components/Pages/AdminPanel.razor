@@ -1,0 +1,80 @@
+﻿@page "/admin"
+@using ConferencesRF.Data
+@using ConferencesRF.Models
+@using Microsoft.EntityFrameworkCore
+@inject ConferencesRfdbContext db
+
+<div class="container">
+    <h3>Панель админа</h3>
+<table>
+    <thead>
+        <th>Название конференции</th>
+        <th>Помещение</th>
+        <th>Дата</th>
+        <th>Способ оплаты</th>
+        <th>Статус</th>
+        <th>Пользователь</th>
+    </thead>
+    <tbody>
+        @foreach(var booking in bookings)
+        {
+            <tr>
+                <td>@booking.ConferenceName</td>
+                <td>@booking.Room.Name</td>
+                <td>@booking.Date.ToString("d")</td>
+                <td>@booking.PaymentType.Name</td>
+                <td>
+                    <div>
+                        @booking.BookingStatus.Name
+                    </div>       
+                        <button @onclick="() => SetStatus(booking.Id)">Назначено</button>
+                        <button @onclick="() => CompleteStatus(booking.Id)">Завершено</button>
+                </td>
+                <td>@booking.User.LastName</td>
+               
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+
+@code {
+    List<Booking> bookings = new List<Booking>();
+
+    //Метод будет выполнен во время загрузки страницы
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadBooking();
+    }
+
+    private async Task LoadBooking()
+    {
+        bookings = await db.Bookings.Include(b => b.Room)
+        .Include(b => b.PaymentType)
+        .Include(b => b.BookingStatus)
+        .Include(b => b.User)
+        .OrderByDescending(b => b.Date).ToListAsync();
+    }
+
+    private async Task CompleteStatus(int id)
+    {
+        Booking booking = await db.Bookings.FindAsync(id);
+        if (booking != null)
+        {
+            booking.BookingStatusId = 3;
+            await db.SaveChangesAsync();
+            await LoadBooking();
+        }
+    }
+
+    private async Task SetStatus(int id)
+    {
+        Booking booking = await db.Bookings.FindAsync(id);
+        if (booking != null)
+        {
+            booking.BookingStatusId = 2;
+            await db.SaveChangesAsync();
+            await LoadBooking();
+        }
+    }
+}

@@ -1,0 +1,93 @@
+﻿@page "/registration"
+@inject ConferencesRfdbContext db
+@inject NavigationManager navigationManager
+@using ConferencesRF.Data
+@using ConferencesRF.Models
+@using Microsoft.EntityFrameworkCore
+@rendermode InteractiveServer
+
+<div class="container">
+    <h3>Регистрация</h3>
+    
+    <EditForm Model="@user" OnValidSubmit="@HandleRegistration">
+        <DataAnnotationsValidator/>
+
+        <p>@errorMessage</p>
+
+        <div>
+            <label>Логин</label>
+            <InputText @bind-Value="user.Login" placeholder="ivan_03"></InputText>
+            <ValidationMessage For="@(() => user.Login)"/>
+        </div>
+
+        <div>
+            <label>Пароль</label>
+            <InputText @bind-Value="user.Password" placeholder="ivan_03"></InputText>
+            <ValidationMessage For="@(() => user.Password)"/>
+        </div>
+
+        <div>
+            <label>Имя</label>
+            <InputText @bind-Value="user.FirstName" placeholder="ivan_03"></InputText>
+            <ValidationMessage For="@(() => user.FirstName)"/>
+        </div>
+
+        <div>
+            <label>Фамилия</label>
+            <InputText @bind-Value="user.LastName" placeholder="ivan_03"></InputText>
+            <ValidationMessage For="@(() => user.LastName)" />
+        </div>
+
+        <div>
+            <label>Отчество</label>
+            <InputText @bind-Value="user.MiddleName" placeholder="ivan_03"></InputText>
+            <ValidationMessage For="@(() => user.MiddleName)" />
+        </div>
+
+        <div>
+            <label>Телефон</label>
+            <InputText @bind-Value="user.Phone" placeholder="ivan_03"></InputText>
+            <ValidationMessage For="@(() => user.Phone)"/>
+        </div>
+
+        <div>
+            <label>Почта</label>
+            <InputText @bind-Value="user.Email" placeholder="ivan_03"></InputText>
+            <ValidationMessage For="@(() => user.Email)"/>
+        </div>
+
+        <button type="submit">Создать пользователя</button>
+        <p>Есть ли учетная запись?<a href="/Login">Авторизация</a></p>
+         
+        </EditForm>
+</div>
+    
+
+
+@code {
+    User user = new User()
+        {
+            RoleId = 1
+        };
+
+    string errorMessage = "";
+
+    async Task HandleRegistration()
+    {
+        //Проверка уникальности Логина
+        bool IsLoginExists = await db.Users.AnyAsync(u => u.Login == user.Login);
+
+        if(IsLoginExists == true)
+        {
+            errorMessage = "Пользователь с указанным логином уже существует. Придумайте другой логин.";
+            return;
+        }
+
+        db.Users.Add(user);
+        await db.SaveChangesAsync();
+        navigationManager.NavigateTo("/login");
+
+
+    }
+   
+}
