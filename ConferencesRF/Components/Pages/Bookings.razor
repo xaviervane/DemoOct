@@ -7,29 +7,42 @@
 @inject UserSession userSession
 
 <div class="container">
-    <h3>Бронирование</h3>
+    <h1>Бронирование</h1>
 
     <a href="/booking/create">Формирование заявки</a>
 
     @foreach (var booking in bookings)
     {
-        <div>
-            <div>@booking.ConferenceName</div>
-            <div>@booking.Room.Name</div>
-            <div>@booking.Date.ToString("dd.MM.yyyy")</div>
-            <div>@booking.PaymentType.Name</div>
-            <div>@booking.BookingStatus.Name</div>
+        <div class="booking-card">
+            <h3>@booking.ConferenceName</h3>
+            <img src="@booking.Room.ImageUrl"/>
+            <div>
+                <span>Помещение: </span>
+                <span>@booking.Room.Name</span>
+            </div>
+            <div>
+                <span>Дата: </span>
+                <span>@booking.Date.ToString("dd.MM.yyyy")</span>
+            </div>
+            <div>
+                <span>Тип оплаты: </span>
+                <span>@booking.PaymentType.Name</span>
+            </div>
+            <div>
+                <span>Статус: </span>
+                <span>@booking.BookingStatus.Name</span>
+            </div>
         </div>
 
-        <div>
+        <div class="feedback-card">
             @foreach(var feedback in booking.FeedBacks)
             {
-                <p>@feedback.Booking.User.LastName</p>
-                <p>@feedback.Text</p>
+                <p class="feedback-user">@feedback.Booking.User.LastName</p>
+                <p class="feedback-content">@feedback.Text</p>
             }
         </div>
 
-        <button @onclick="() => ShowFeedBackForm(booking.Id)">Оставить отзыв</button>
+        <button class="btn btn-primary" @onclick="() => ShowFeedBackForm(booking.Id)">Оставить отзыв</button>
 
 
         @if (booking.Id == selectedBookingId)
@@ -37,12 +50,13 @@
             <EditForm Model="@newFeedBack" OnValidSubmit="@SubmitFeedBack">
                 <DataAnnotationsValidator />
                 <div>
+                    <br />
                     <label>Ваш отзыв:</label>
                     <InputTextArea @bind-Value="newFeedBack.Text" rows="4" placeholder="Поделитесь впечатлениями о мероприятии..."></InputTextArea>
                     <ValidationMessage For="@(() => newFeedBack.Text)" />
                 </div>
 
-                <button type="submit">Отправить отзыв</button>
+                <button class="btn btn-primary" type="submit">Отправить отзыв</button>
             </EditForm>
         }
     }

@@ -11,6 +11,8 @@ public partial class Room
 
     public int RoomTypeId { get; set; }
 
+    public string ImageUrl { get; set; } = null!;
+
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
     public virtual RoomType RoomType { get; set; } = null!;

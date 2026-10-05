@@ -10,7 +10,7 @@
 
 
 <div class="container">
-    <h3>Регистрация</h3>
+    <h1>Вход</h1>
     
     <EditForm Model="@loginModel" OnValidSubmit="@HandleLogin">
         <DataAnnotationsValidator/>
@@ -29,8 +29,8 @@
             <ValidationMessage For="@(() => loginModel.Password)"/>
         </div>
 
-        <button type="submit">Войти</button>
-        <p>Есть ли учетная запись?<a href="/Login">Авторизация</a></p>
+        <button class="btn btn-primary" type="submit">Войти</button>
+        <p>Есть ли учетная запись? <a href="/Login">Авторизация</a></p>
          
         </EditForm>
 </div>
