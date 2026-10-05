@@ -1,8 +1,89 @@
 /*Цветовая палитра*/
+@font-face{
+    font-family: 'PT Sans';
+    src: url('fonts/PT_Sans-Regular.ttf');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face{
+    font-family: 'PT Sans';
+    src: url('fonts/PT_Sans-Bold.ttf');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face{
+    font-family: 'PT Sans';
+    src: url('fonts/PT_Sans-Italy.ttf');
+    font-weight: 400;
+    font-style: italic;
+}
+
 :root{
     --color-blue: #007bff;
     --color-dark-blue: #0d47a1;
     --color-gray: #6c757d;
     --color-bg: #f8f9fa;
     --color-highlight: #ffffff;
+}
+
+
+/*Основные стили*/
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'PT Sans', Arial, sans-serif;
+    font-size: 16px;
+    background-color: var(--color-bg);
+}
+
+body{
+    display: flex;
+}
+
+h1{
+    font-family: 'PT Sans', Arial, sans-serif;
+    font-size: 36px;
+}
+
+h2{
+    font-family: 'PT Sans', Arial, sans-serif;
+    font-size: 24px;
+}
+
+h3{
+    font-family: 'PT Sans', Arial, sans-serif;
+    font-size: 18px;
+}
+
+p, label, input, select, textarea, button {
+    font-family: 'PT Sans', Arial, sans-serif;
+    font-size: 16px;
+}
+
+small {
+    font-family: 'PT Sans', Arial, sans-serif;
+    font-size: 12px;
+    font-style: italic;
+}
+
+a{
+    color: var(--color-blue);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+a:hover {
+    color: var(--color-dark-blue);
+    text-decoration: underline;
+}
+
+.container{
+    max-width: 1200px;
+    margin: auto auto;
+    padding: 32px;
+    background-color: var(--color-highlight);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
