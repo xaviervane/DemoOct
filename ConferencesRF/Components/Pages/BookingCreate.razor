@@ -8,7 +8,7 @@
 @inject NavigationManager navigationManager
 
 <div class="container">
-    <h3>Формировние заявки</h3>
+    <h1>Формировние заявки</h1>
     
     <EditForm Model="@booking" OnValidSubmit="@HandleBooking">
         <DataAnnotationsValidator/>
@@ -51,7 +51,7 @@
             <ValidationMessage For="@(() => booking.PaymentTypeId)" />
         </div>
          
-        <button type="submit">Создать заявку</button>
+        <button class="btn btn-primary" type="submit">Создать заявку</button>
         </EditForm>
 </div>
 

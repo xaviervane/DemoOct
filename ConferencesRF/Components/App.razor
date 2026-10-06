@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
     <ResourcePreloader />
+    <link rel="icon" href="/lib/icons/favicon.png"/>
     <link rel="stylesheet" href="@Assets["app.css"]" />
     <link rel="stylesheet" href="@Assets["ConferencesRF.styles.css"]" />
     <ImportMap />
@@ -13,9 +14,30 @@
 </head>
 
 <body>
+    <header>
+        <div class="header-logo">
+            <img src="/lib/icons/logo.jpg"/>
+            <h3>Конференции.РФ</h3>
+        </div>
+    </header>
+
     <Routes @rendermode="InteractiveServer" />
     <ReconnectModal />
     <script src="@Assets["_framework/blazor.web.js"]"></script>
+
+    <footer>
+        <div class="footer-logo">
+            <p>(c) @DateTime.Now.Year Конференции.РФ</p>
+            <div class="socials">
+                <a href="#">
+                    <img style="width: 25px; height: 25px;" src="/lib/icons/vkontakte.png"/>
+                </a>
+                <a href="#">
+                    <img style="width: 25px; height: 25px;" src="/lib/icons/ondaklassniki.png" />
+                </a> 
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>

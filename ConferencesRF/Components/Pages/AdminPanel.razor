@@ -5,7 +5,7 @@
 @inject ConferencesRfdbContext db
 
 <div class="container">
-    <h3>Панель админа</h3>
+    <h1>Панель админа</h1>
 <table>
     <thead>
         <th>Название конференции</th>
@@ -27,8 +27,8 @@
                     <div>
                         @booking.BookingStatus.Name
                     </div>       
-                        <button @onclick="() => SetStatus(booking.Id)">Назначено</button>
-                        <button @onclick="() => CompleteStatus(booking.Id)">Завершено</button>
+                        <button class="btn btn-primary" @onclick="() => SetStatus(booking.Id)">Назначено</button>
+                        <button class="btn btn-primary" @onclick="() => CompleteStatus(booking.Id)">Завершено</button>
                 </td>
                 <td>@booking.User.LastName</td>
                

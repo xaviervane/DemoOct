@@ -82,11 +82,6 @@ public partial class ConferencesRfdbContext : DbContext
                 .HasForeignKey(d => d.BookingId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_FeedBack_Booking");
-
-            entity.HasOne(d => d.BookingNavigation).WithMany(p => p.FeedBacks)
-                .HasForeignKey(d => d.BookingId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_FeedBack_User");
         });
 
         modelBuilder.Entity<PaymentType>(entity =>
@@ -141,7 +136,7 @@ public partial class ConferencesRfdbContext : DbContext
         });
 
         OnModelCreatingPartial(modelBuilder);
-    }
+    }   
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

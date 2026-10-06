@@ -12,6 +12,4 @@ public partial class FeedBack
     public int BookingId { get; set; }
 
     public virtual Booking Booking { get; set; } = null!;
-
-    public virtual User BookingNavigation { get; set; } = null!;
 }
