@@ -1,6 +1,7 @@
 ﻿@page "/login"
 @rendermode InteractiveServer
 @inject ConferencesRfdbContext db
+@using System.ComponentModel.DataAnnotations
 @using ConferencesRF.Data
 @using ConferencesRF.Models
 @using ConferencesRF.Services
@@ -67,7 +68,9 @@
 
     class LoginModel
     {
+        [Required(ErrorMessage = "Поле \"Логин\" обязательно для заполнения")]
         public string Login { get; set; }
+        [Required(ErrorMessage = "Поле \"Пароль\" обязательно для заполнения")]
         public string Password { get; set; }
     }
 }

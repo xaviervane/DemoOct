@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Элементы решения/">
     <File Path="../../../../ConferencesRfDb.sql" />
+    <File Path=".gitignore" />
     <File Path=".gitignore.md" />
   </Folder>
   <Project Path="ConferencesRF/ConferencesRF.csproj" />

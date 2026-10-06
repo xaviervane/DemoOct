@@ -69,7 +69,7 @@
         booking.BookingStatusId = 1;
         booking.UserId = userSession.UserId.Value;
 
-        try
+        try 
         {
             db.Bookings.Add(booking);
             await db.SaveChangesAsync();

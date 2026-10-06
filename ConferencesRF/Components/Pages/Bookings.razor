@@ -42,7 +42,10 @@
             }
         </div>
 
-        <button class="btn btn-primary" @onclick="() => ShowFeedBackForm(booking.Id)">Оставить отзыв</button>
+        @if (booking.BookingStatusId == 3)
+        {
+            <button class="btn btn-primary" @onclick="() => ShowFeedBackForm(booking.Id)">Оставить отзыв</button>
+        }
 
 
         @if (booking.Id == selectedBookingId)

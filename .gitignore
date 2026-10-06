@@ -1,8 +1,38 @@
+# Visual Studio
 .vs/
+.vscode/
+
+# Build results
 bin/
 obj/
 
+# User-specific Visual Studio files
 *.user
 *.suo
+*.userosscache
+*.sln.docstates
 
-appsettings.Development.json
+# Build folders
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# Test results
+TestResults/
+
+# NuGet
+*.nupkg
+packages/
+
+# Logs
+*.log
+
+# OS garbage
+.DS_Store
+Thumbs.db
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
